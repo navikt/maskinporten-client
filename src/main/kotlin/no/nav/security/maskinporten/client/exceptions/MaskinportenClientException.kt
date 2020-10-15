@@ -1,0 +1,5 @@
+package no.nav.security.maskinporten.client.exceptions
+
+import java.net.http.HttpResponse
+
+internal class MaskinportenClientException(response: HttpResponse<String>) : Exception("Feil ved henting av token: Status: ${response.statusCode()} , Body: ${response.body()}")

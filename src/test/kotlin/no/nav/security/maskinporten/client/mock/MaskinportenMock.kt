@@ -1,4 +1,4 @@
-package no.nav.tpregisteret.debug.mock
+package no.nav.security.maskinporten.client.mock
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
@@ -11,13 +11,10 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import no.nav.tpregisteret.debug.maskinporten.CONTENT_TYPE
-import no.nav.tpregisteret.debug.maskinporten.GRANT_TYPE
+import no.nav.security.maskinporten.client.MaskinportenClient.Companion.CONTENT_TYPE
+import no.nav.security.maskinporten.client.MaskinportenClient.Companion.GRANT_TYPE
+import no.nav.security.maskinporten.client.MaskinportenConfig
 import java.util.*
-
-private const val PORT = 8096
-private const val TOKEN_PATH = "/token"
-internal const val MASKINPORTEN_MOCK_HOST = "http://localhost:$PORT"
 
 internal class MaskinportenMock {
     private var mock = WireMockServer(PORT)
@@ -95,5 +92,22 @@ internal class MaskinportenMock {
         val signer: JWSSigner = RSASSASigner(privateKey)
         signedJWT.sign(signer)
         return signedJWT.serialize()
+    }
+
+    companion object {
+
+        private const val PORT = 8096
+        private const val TOKEN_PATH = "/token"
+        private const val MASKINPORTEN_MOCK_HOST = "http://localhost:$PORT"
+
+        internal fun createMaskinportenConfig(privateKey: RSAKey = RSAKeyGenerator(2048).keyID("123").generate()) = MaskinportenConfig(
+                baseUrl = MASKINPORTEN_MOCK_HOST,
+                issuer = "testIssuer",
+                scope = "testScope",
+                clientId = "17b3e4e8-8203-4463-a947-5c24021b7742",
+                privateKey = privateKey,
+                validInSeconds = 120,
+                audience = "testAud"
+        )
     }
 }

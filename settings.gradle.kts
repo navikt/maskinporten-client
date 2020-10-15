@@ -1,2 +1,2 @@
-rootProject.name = "tpregisteret-debug"
+rootProject.name = "maskinporten-client"
 

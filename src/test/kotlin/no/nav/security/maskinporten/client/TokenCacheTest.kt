@@ -1,4 +1,4 @@
-package no.nav.tpregisteret.debug.maskinporten
+package no.nav.security.maskinporten.client
 
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
@@ -7,16 +7,13 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import no.nav.tpregisteret.debug.maskinporten.TokenCache
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.springframework.test.context.ActiveProfiles
 import java.util.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ActiveProfiles("ct")
 internal class TokenCacheTest {
     private val privateKey: RSAKey = RSAKeyGenerator(2048).keyID("123").generate()
 
