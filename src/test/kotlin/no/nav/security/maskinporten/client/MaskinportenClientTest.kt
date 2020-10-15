@@ -4,7 +4,7 @@ import no.nav.security.maskinporten.client.exceptions.MaskinportenClientExceptio
 import no.nav.security.maskinporten.client.exceptions.MaskinportenObjectMapperException
 import no.nav.security.maskinporten.client.mock.MaskinportenMock
 import org.junit.jupiter.api.*
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,8 +28,8 @@ internal class MaskinportenClientTest {
     fun `reuse token from maskinporten if not expired`() {
         maskinportenMock.`mock valid response for only one call`()
 
-        val firstToken = maskinportenClient.maskinportenToken
-        val secondToken = maskinportenClient.maskinportenToken
+        val firstToken = maskinportenClient.maskinportenTokenString
+        val secondToken = maskinportenClient.maskinportenTokenString
         assertEquals(firstToken, secondToken)
     }
 

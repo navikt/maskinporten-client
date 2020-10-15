@@ -7,8 +7,7 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.util.*
@@ -20,13 +19,13 @@ internal class TokenCacheTest {
     @Test
     internal fun `assert expired if expiration time on token is under 20 seconds from now`() {
         val token = TokenCache(createMaskinportenToken(19))
-        assertTrue(token.isExpired)
+        assertNull(token.token)
     }
 
     @Test
     internal fun `should not be expired if expiration time is over 20 seconds from now`() {
         val token = TokenCache(createMaskinportenToken(30))
-        assertFalse(token.isExpired)
+        assertNotNull(token.token)
     }
 
     private fun createMaskinportenToken(expiresIn: Int): String {

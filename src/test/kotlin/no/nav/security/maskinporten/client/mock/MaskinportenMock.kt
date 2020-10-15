@@ -102,11 +102,11 @@ internal class MaskinportenMock {
 
         internal fun createMaskinportenConfig(privateKey: RSAKey = RSAKeyGenerator(2048).keyID("123").generate()) = MaskinportenConfig(
                 baseUrl = MASKINPORTEN_MOCK_HOST,
-                issuer = "testIssuer",
-                scope = "testScope",
                 clientId = "17b3e4e8-8203-4463-a947-5c24021b7742",
                 privateKey = privateKey,
+                scope = "testScope",
                 validInSeconds = 120,
+                issuer = "testIssuer",
                 audience = "testAud"
         )
     }

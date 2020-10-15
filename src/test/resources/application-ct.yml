@@ -1,7 +1,0 @@
-aud_maskinporten: testAud
-maskinporten-host: https://ver2.maskinporten.no
-jwk-private-key:
-iss_maskinporten: testIssuer
-scope_maskinporten: testScope
-jwt_expiration_time_seconds_maskinporten: 120
-client-id: 17b3e4e8-8203-4463-a947-5c24021b7742

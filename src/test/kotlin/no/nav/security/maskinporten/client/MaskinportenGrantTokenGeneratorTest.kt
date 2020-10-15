@@ -7,8 +7,8 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.SignedJWT
 import no.nav.security.maskinporten.client.mock.MaskinportenMock
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.util.*
