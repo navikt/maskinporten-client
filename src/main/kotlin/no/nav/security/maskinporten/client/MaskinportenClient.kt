@@ -6,6 +6,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.nimbusds.jwt.SignedJWT
 import no.nav.security.maskinporten.client.exceptions.MaskinportenClientException
 import no.nav.security.maskinporten.client.exceptions.MaskinportenObjectMapperException
+import java.net.InetSocketAddress
+import java.net.ProxySelector
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -19,7 +21,10 @@ class MaskinportenClient(
     private var tokenCache: TokenCache = TokenCache()
     private val grantTokenGenerator = MaskinportenGrantTokenGenerator(config)
 
-    private val httpClient: HttpClient = HttpClient.newHttpClient()
+    private val httpClient: HttpClient = HttpClient.newBuilder().proxy(
+            config.proxy?.run { ProxySelector.of(InetSocketAddress(hostName, port)) }
+                    ?: ProxySelector.getDefault()
+    ).build()
     private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
     internal val maskinportenToken: SignedJWT
@@ -46,7 +51,6 @@ class MaskinportenClient(
 
     private val requestBody: String
         get() = "grant_type=$GRANT_TYPE&assertion=${grantTokenGenerator.jwt}"
-        //objectMapper.writeValueAsString(MaskinportenRequestBody(assertion = grantTokenGenerator.jwt))
 
     private fun mapToMaskinportenResponseBody(responseBody: String): MaskinportenResponseBody =
             try {
