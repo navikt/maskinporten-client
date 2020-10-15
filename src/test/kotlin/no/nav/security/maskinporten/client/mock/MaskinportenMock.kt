@@ -51,8 +51,7 @@ internal class MaskinportenMock {
                 .withHeader("Content-Type", WireMock.equalTo(CONTENT_TYPE))
                 .inScenario("First time")
                 .whenScenarioStateIs(Scenario.STARTED)
-                .withRequestBody(WireMock.matchingJsonPath("$.grant_type", WireMock.matching(GRANT_TYPE)))
-                .withRequestBody(WireMock.matchingJsonPath("$.assertion"))
+                .withRequestBody(WireMock.matching("grant_type=$GRANT_TYPE&assertion=.*"))
                 .willReturn(WireMock.ok("""{
                       "access_token" : "${createMaskinportenToken()}",
                       "token_type" : "Bearer",
@@ -66,16 +65,14 @@ internal class MaskinportenMock {
     internal fun `mock invalid JSON response`() {
         mock.stubFor(WireMock.post(WireMock.urlPathEqualTo(TOKEN_PATH))
                 .withHeader("Content-Type", WireMock.equalTo(CONTENT_TYPE))
-                .withRequestBody(WireMock.matchingJsonPath("$.grant_type", WireMock.matching(GRANT_TYPE)))
-                .withRequestBody(WireMock.matchingJsonPath("$.assertion"))
+                .withRequestBody(WireMock.matching("grant_type=$GRANT_TYPE&assertion=.*"))
                 .willReturn(WireMock.ok("""w""")))
     }
 
     internal fun `mock 500 server error`() {
         mock.stubFor(WireMock.post(WireMock.urlPathEqualTo(TOKEN_PATH))
                 .withHeader("Content-Type", WireMock.equalTo(CONTENT_TYPE))
-                .withRequestBody(WireMock.matchingJsonPath("$.grant_type", WireMock.matching(GRANT_TYPE)))
-                .withRequestBody(WireMock.matchingJsonPath("$.assertion"))
+                .withRequestBody(WireMock.matching("grant_type=$GRANT_TYPE&assertion=.*"))
                 .willReturn(WireMock.serverError().withBody("test body")))
     }
 
@@ -105,9 +102,7 @@ internal class MaskinportenMock {
                 clientId = "17b3e4e8-8203-4463-a947-5c24021b7742",
                 privateKey = privateKey,
                 scope = "testScope",
-                validInSeconds = 120,
-                issuer = "testIssuer",
-                audience = "testAud"
+                validInSeconds = 120
         )
     }
 }

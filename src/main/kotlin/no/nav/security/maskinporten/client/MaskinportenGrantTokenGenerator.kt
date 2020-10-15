@@ -21,8 +21,8 @@ class MaskinportenGrantTokenGenerator(
 
     private val jwtClaimSet: JWTClaimsSet
         get() = JWTClaimsSet.Builder().apply {
-            config.audience?.let(::audience)
-            issuer(config.issuer)
+            audience(config.issuer)
+            issuer(config.clientId)
             claim(SCOPE_CLAIM, config.scope)
             issueTime(Date())
             expirationTime(Date() addSeconds config.validInSeconds)

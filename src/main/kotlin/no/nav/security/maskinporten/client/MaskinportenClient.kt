@@ -45,7 +45,8 @@ class MaskinportenClient(
                 .build()
 
     private val requestBody: String
-        get() = objectMapper.writeValueAsString(MaskinportenRequestBody(assertion = grantTokenGenerator.jwt))
+        get() = "grant_type=$GRANT_TYPE&assertion=${grantTokenGenerator.jwt}"
+        //objectMapper.writeValueAsString(MaskinportenRequestBody(assertion = grantTokenGenerator.jwt))
 
     private fun mapToMaskinportenResponseBody(responseBody: String): MaskinportenResponseBody =
             try {
@@ -61,6 +62,5 @@ class MaskinportenClient(
         internal const val CONTENT_TYPE = "application/x-www-form-urlencoded"
     }
 
-    internal data class MaskinportenRequestBody(val grant_type: String = GRANT_TYPE, val assertion: String)
     internal data class MaskinportenResponseBody(val access_token: String, val token_type: String?, val expires_in: Int?, val scope: String?)
 }

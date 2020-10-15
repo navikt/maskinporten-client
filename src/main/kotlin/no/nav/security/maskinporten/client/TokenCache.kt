@@ -8,7 +8,7 @@ internal class TokenCache(token: String? = null) {
     internal val token = token?.let(SignedJWT::parse)
         get() = field?.takeUnless { it.isExpired }
 
-    internal val SignedJWT.isExpired: Boolean
+    private val SignedJWT.isExpired: Boolean
         get() = jwtClaimsSet?.expirationTime?.is20SecondsPrior?.not() ?: false
 
     private val Date.is20SecondsPrior: Boolean

@@ -44,8 +44,8 @@ internal class MaskinportenGrantTokenGeneratorTest {
         val generator = MaskinportenGrantTokenGenerator(config)
         val signedJWT = SignedJWT.parse(generator.jwt)
 
-        assertEquals(config.audience, signedJWT.jwtClaimsSet.audience[0])
-        assertEquals(config.issuer, signedJWT.jwtClaimsSet.issuer)
+        assertEquals(config.issuer, signedJWT.jwtClaimsSet.audience[0])
+        assertEquals(config.clientId, signedJWT.jwtClaimsSet.issuer)
         assertEquals(config.scope, signedJWT.jwtClaimsSet.claims[SCOPE_CLAIM])
     }
 
