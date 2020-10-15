@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.*
 
 plugins {
     kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
     id("se.patrikerdes.use-latest-versions") version "0.2.14"
     id("net.researchgate.release") version "2.8.1"
     `maven-publish`
@@ -40,6 +41,11 @@ publishing {
             }
         }
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
 }
 
 tasks {
