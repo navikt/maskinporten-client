@@ -8,7 +8,9 @@ data class MaskinportenConfig(
         internal val privateKey: RSAKey,
         internal val scope: String,
         internal val validInSeconds: Int,
-        internal val proxy: ProxyConfig? = null
+        internal val proxy: ProxyConfig? = null,
+        internal val jti: String? = null,
+        internal val resource: String? = null
 ){
     internal val issuer = baseUrl.suffix("/")
 }

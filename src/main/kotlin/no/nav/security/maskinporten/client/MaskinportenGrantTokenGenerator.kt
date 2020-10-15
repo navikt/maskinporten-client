@@ -24,6 +24,8 @@ class MaskinportenGrantTokenGenerator(
             audience(config.issuer)
             issuer(config.clientId)
             claim(SCOPE_CLAIM, config.scope)
+            config.jti?.also { claim(JTI_CLAIM, it) }
+            config.resource?.also { claim(RESOURCE_CLAIM, it) }
             issueTime(Date())
             expirationTime(Date() addSeconds config.validInSeconds)
         }.build()
