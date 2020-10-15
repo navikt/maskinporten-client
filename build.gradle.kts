@@ -10,7 +10,6 @@ plugins {
 }
 
 group = "no.nav.pensjonsamhandling"
-version = "0.2"
 
 repositories {
     mavenCentral()
@@ -23,6 +22,11 @@ dependencies {
     implementation("org.junit.jupiter", "junit-jupiter", "5.7.0")
 //    testImplementation(kotlin("test-junit5"))
     testImplementation("com.github.tomakehurst", "wiremock", "2.27.2")
+}
+
+release {
+    newVersionCommitMessage = "[Release Plugin] - next version commit: "
+    tagTemplate = "release-\${version}"
 }
 
 publishing {
