@@ -27,13 +27,13 @@ class MaskinportenClient(
     ).build()
     private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
-    internal val maskinportenToken: SignedJWT
+    val maskinportenToken: SignedJWT
         get() = tokenCache.token ?: TokenCache(tokenFromMaskinporten).let {
             tokenCache = it
             it.token!!
         }
 
-    internal val maskinportenTokenString: String
+    val maskinportenTokenString: String
         get() = maskinportenToken.parsedString
 
     private val tokenFromMaskinporten: String
