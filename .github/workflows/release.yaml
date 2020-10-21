@@ -1,4 +1,4 @@
-name: Release pensjon-samhandling-ktor-support
+name: Release maskinporten-client
 
 on:
   push:
