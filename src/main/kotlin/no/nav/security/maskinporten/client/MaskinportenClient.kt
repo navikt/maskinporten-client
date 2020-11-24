@@ -22,7 +22,7 @@ class MaskinportenClient(
     private val grantTokenGenerator = MaskinportenGrantTokenGenerator(config)
 
     private val httpClient: HttpClient = HttpClient.newBuilder().proxy(
-            config.proxy?.run { ProxySelector.of(InetSocketAddress(hostName, port)) }
+            config.proxy?.run { ProxySelector.of(InetSocketAddress.createUnresolved(hostName, port)) }
                     ?: ProxySelector.getDefault()
     ).build()
     private val objectMapper = ObjectMapper().registerModule(KotlinModule())
