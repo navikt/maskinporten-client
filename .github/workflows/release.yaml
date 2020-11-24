@@ -21,7 +21,7 @@ jobs:
         run: git config user.email "${{ github.actor }}@users.noreply.github.com" && git config user.name "Github Actions"
 
       - name: capture version number for release
-        run: echo "::set-env name=VERSION::$(grep -v '^#' gradle.properties | grep 'version=' | cut -d '=' -f2 | xargs)"
+        run: echo "VERSION=$(grep -v '^#' gradle.properties | grep 'version=' | cut -d '=' -f2 | xargs)" >> $GITHUB_ENV
 
       - name: build and update version
         run: ./gradlew build release -Prelease.useAutomaticVersion=true
