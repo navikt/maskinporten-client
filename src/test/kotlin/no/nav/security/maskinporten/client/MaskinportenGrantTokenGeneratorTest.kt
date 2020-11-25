@@ -6,6 +6,7 @@ import com.nimbusds.jose.crypto.RSASSAVerifier
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.SignedJWT
+import no.nav.security.maskinporten.client.MaskinportenGrantTokenGenerator.Companion.SCOPE_CLAIM
 import no.nav.security.maskinporten.client.mock.MaskinportenMock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue

@@ -1,6 +1,7 @@
 package no.nav.security.maskinporten.client
 
 import com.nimbusds.jose.jwk.RSAKey
+import java.net.ProxySelector
 
 data class MaskinportenConfig(
         internal val baseUrl: String,
@@ -8,7 +9,7 @@ data class MaskinportenConfig(
         internal val privateKey: RSAKey,
         internal val scope: String,
         internal val validInSeconds: Int,
-        internal val proxy: ProxyConfig? = null,
+        internal val proxy: ProxySelector = ProxySelector.getDefault(),
         internal val jti: String? = null,
         internal val resource: String? = null
 ){
