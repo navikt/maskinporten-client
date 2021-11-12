@@ -1,4 +1,4 @@
-package no.nav.security.maskinporten.client.exceptions
+package no.nav.pensjonsamhandling.maskinporten.client.exceptions
 
 import java.net.http.HttpResponse
 

@@ -1,0 +1,32 @@
+name: Publish new patch release
+
+on: workflow_dispatch
+
+jobs:
+  dowload_artifact:
+    name: Generate and publish new patch release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '16.x'
+
+      - name: Determine version
+        id: version
+        uses: zwaldowski/semver-release-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+          bump: patch
+
+      - name: Publish new version
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+
+      - name: Update version tag
+        uses: zwaldowski/semver-release-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

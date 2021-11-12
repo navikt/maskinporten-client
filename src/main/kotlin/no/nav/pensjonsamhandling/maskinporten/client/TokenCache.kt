@@ -1,11 +1,11 @@
-package no.nav.security.maskinporten.client
+package no.nav.pensjonsamhandling.maskinporten.client
 
 import com.nimbusds.jwt.SignedJWT
 import java.util.*
 
 
-internal class TokenCache(token: String? = null) {
-    internal val token = token?.let(SignedJWT::parse)
+internal class TokenCache(token: String) {
+    internal var token: SignedJWT? = SignedJWT.parse(token)
         get() = field?.takeUnless { it.isExpired }
 
     private val SignedJWT.isExpired: Boolean
@@ -19,6 +19,10 @@ internal class TokenCache(token: String? = null) {
 
     private val now: Date
         get() = Date()
+
+    internal fun renew(newToken: String) = SignedJWT.parse(newToken).also {
+        token = it
+    }
 
     companion object {
         private const val TWENTY_SECONDS = 20

@@ -1,4 +1,4 @@
-package no.nav.security.maskinporten.client.mock
+package no.nav.pensjonsamhandling.maskinporten.client.mock
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
@@ -11,9 +11,9 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import no.nav.security.maskinporten.client.MaskinportenClient.Companion.CONTENT_TYPE
-import no.nav.security.maskinporten.client.MaskinportenClient.Companion.GRANT_TYPE
-import no.nav.security.maskinporten.client.MaskinportenConfig
+import no.nav.pensjonsamhandling.maskinporten.client.MaskinportenClient.Companion.CONTENT_TYPE
+import no.nav.pensjonsamhandling.maskinporten.client.MaskinportenClient.Companion.GRANT_TYPE
+import no.nav.pensjonsamhandling.maskinporten.client.MaskinportenConfig
 import java.util.*
 
 internal class MaskinportenMock {
@@ -101,7 +101,6 @@ internal class MaskinportenMock {
                 baseUrl = MASKINPORTEN_MOCK_HOST,
                 clientId = "17b3e4e8-8203-4463-a947-5c24021b7742",
                 privateKey = privateKey,
-                scope = "testScope",
                 validInSeconds = 120
         )
     }

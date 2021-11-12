@@ -1,15 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.*
 
+group = "no.nav.pensjonsamhandling"
+
 plugins {
-    kotlin("jvm") version "1.4.10"
-    kotlin("plugin.serialization") version "1.4.10"
-    id("se.patrikerdes.use-latest-versions") version "0.2.14"
-    id("net.researchgate.release") version "2.8.1"
+    kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
     `maven-publish`
     `java-library`
 }
-
-group = "no.nav.pensjonsamhandling"
 
 repositories {
     mavenCentral()
@@ -17,20 +15,21 @@ repositories {
 
 dependencies {
     implementation(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", "2.11.3")
-    implementation("com.nimbusds", "nimbus-jose-jwt", "9.1.2")
-    testImplementation("org.junit.jupiter", "junit-jupiter", "5.7.0")
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", "2.13.0")
+    implementation("com.nimbusds", "nimbus-jose-jwt", "9.15.2")
+    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.1")
     testImplementation("com.github.tomakehurst", "wiremock", "2.27.2")
 }
 
-release {
-    newVersionCommitMessage = "[Release Plugin] - next version commit: "
-    tagTemplate = "release-\${version}"
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            version = System.getenv("RELEASE_VERSION")
             from(components["java"])
         }
     }
@@ -46,14 +45,9 @@ publishing {
     }
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_14
-    targetCompatibility = JavaVersion.VERSION_14
-}
-
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "14"
+        kotlinOptions.jvmTarget = "16"
     }
     test {
         useJUnitPlatform()

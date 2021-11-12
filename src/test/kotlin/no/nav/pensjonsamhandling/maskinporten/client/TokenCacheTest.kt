@@ -1,4 +1,4 @@
-package no.nav.security.maskinporten.client
+package no.nav.pensjonsamhandling.maskinporten.client
 
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader

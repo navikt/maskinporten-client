@@ -1,13 +1,14 @@
-package no.nav.security.maskinporten.client
+package no.nav.pensjonsamhandling.maskinporten.client
 
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSVerifier
 import com.nimbusds.jose.crypto.RSASSAVerifier
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
+import com.nimbusds.jose.shaded.json.JSONArray
 import com.nimbusds.jwt.SignedJWT
-import no.nav.security.maskinporten.client.MaskinportenGrantTokenGenerator.Companion.SCOPE_CLAIM
-import no.nav.security.maskinporten.client.mock.MaskinportenMock
+import no.nav.pensjonsamhandling.maskinporten.client.MaskinportenGrantTokenGenerator.Companion.SCOPE_CLAIM
+import no.nav.pensjonsamhandling.maskinporten.client.mock.MaskinportenMock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -19,12 +20,13 @@ import kotlin.math.absoluteValue
 internal class MaskinportenGrantTokenGeneratorTest {
     private val privateKey: RSAKey = RSAKeyGenerator(2048).keyID("123").generate()
     private val publicKey: RSAKey = privateKey.toPublicJWK()
+    private val scopes = listOf("testScope1", "testScope2")
 
     @Test
     fun `Token is signed with private key in environment variables`() {
         val config = MaskinportenMock.createMaskinportenConfig(privateKey)
         val generator = MaskinportenGrantTokenGenerator(config)
-        val signedJWT = SignedJWT.parse(generator.jwt)
+        val signedJWT = SignedJWT.parse(generator.generateJWT(scopes))
         val verifier: JWSVerifier = RSASSAVerifier(publicKey)
 
         assertTrue(signedJWT.verify(verifier))
@@ -34,7 +36,7 @@ internal class MaskinportenGrantTokenGeneratorTest {
     fun `Algorithm in token header is rsa256`() {
         val config = MaskinportenMock.createMaskinportenConfig(privateKey)
         val generator = MaskinportenGrantTokenGenerator(config)
-        val signedJWT = SignedJWT.parse(generator.jwt)
+        val signedJWT = SignedJWT.parse(generator.generateJWT(scopes))
 
         assertEquals("RS256", (signedJWT.header.algorithm as JWSAlgorithm).name)
     }
@@ -43,18 +45,18 @@ internal class MaskinportenGrantTokenGeneratorTest {
     fun `Required claims added to token body`() {
         val config = MaskinportenMock.createMaskinportenConfig(privateKey)
         val generator = MaskinportenGrantTokenGenerator(config)
-        val signedJWT = SignedJWT.parse(generator.jwt)
+        val signedJWT = SignedJWT.parse(generator.generateJWT(scopes))
 
         assertEquals(config.issuer, signedJWT.jwtClaimsSet.audience[0])
         assertEquals(config.clientId, signedJWT.jwtClaimsSet.issuer)
-        assertEquals(config.scope, signedJWT.jwtClaimsSet.claims[SCOPE_CLAIM])
+        assert((signedJWT.jwtClaimsSet.claims[SCOPE_CLAIM] as JSONArray).containsAll(scopes))
     }
 
     @Test
     fun `Required timestamps are added to token body`() {
         val config = MaskinportenMock.createMaskinportenConfig(privateKey)
         val generator = MaskinportenGrantTokenGenerator(config)
-        val signedJWT = SignedJWT.parse(generator.jwt)
+        val signedJWT = SignedJWT.parse(generator.generateJWT(scopes))
 
         val issuedAt = signedJWT.jwtClaimsSet.issueTime
         val expirationTime = signedJWT.jwtClaimsSet.expirationTime
