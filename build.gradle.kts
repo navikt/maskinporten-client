@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.*
 group = "no.nav.pensjonsamhandling"
 
 plugins {
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
     `maven-publish`
     `java-library`
 }

@@ -20,7 +20,7 @@ class MaskinportenGrantTokenGenerator(
     private fun generateJWTClaimSet(scopes: List<String>) = JWTClaimsSet.Builder().apply {
         audience(config.issuer)
         issuer(config.clientId)
-        claim(SCOPE_CLAIM, scopes)
+        claim(SCOPE_CLAIM, scopes.joinToString(" "))
         config.jti?.also { claim(JTI_CLAIM, it) }
         config.resource?.also { claim(RESOURCE_CLAIM, it) }
         issueTime(Date())

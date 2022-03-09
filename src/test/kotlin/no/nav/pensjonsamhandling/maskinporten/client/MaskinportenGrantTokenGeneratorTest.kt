@@ -5,7 +5,6 @@ import com.nimbusds.jose.JWSVerifier
 import com.nimbusds.jose.crypto.RSASSAVerifier
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
-import com.nimbusds.jose.shaded.json.JSONArray
 import com.nimbusds.jwt.SignedJWT
 import no.nav.pensjonsamhandling.maskinporten.client.MaskinportenGrantTokenGenerator.Companion.SCOPE_CLAIM
 import no.nav.pensjonsamhandling.maskinporten.client.mock.MaskinportenMock
@@ -49,7 +48,7 @@ internal class MaskinportenGrantTokenGeneratorTest {
 
         assertEquals(config.issuer, signedJWT.jwtClaimsSet.audience[0])
         assertEquals(config.clientId, signedJWT.jwtClaimsSet.issuer)
-        assert((signedJWT.jwtClaimsSet.claims[SCOPE_CLAIM] as JSONArray).containsAll(scopes))
+        assertEquals(scopes, signedJWT.jwtClaimsSet.getStringClaim(SCOPE_CLAIM).split(' '))
     }
 
     @Test
