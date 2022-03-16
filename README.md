@@ -14,7 +14,7 @@ Create a MaskinportenConfig instance. This takes following parameters
 
 Then create a MaskinportenClient instance using your config object.
 
-To generate a token, use the getToken or getTokenAsString method of the client object. This takes the desired token scope(s) as parameter.
+To generate a token, use the getToken or getTokenString method of the client object. This takes the desired token scope(s) as parameter.
 
 ---
 
