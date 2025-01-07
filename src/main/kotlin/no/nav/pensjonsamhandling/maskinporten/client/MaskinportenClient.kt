@@ -1,8 +1,8 @@
 package no.nav.pensjonsamhandling.maskinporten.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.nimbusds.jwt.SignedJWT
 import no.nav.pensjonsamhandling.maskinporten.client.exceptions.MaskinportenClientException
 import no.nav.pensjonsamhandling.maskinporten.client.exceptions.MaskinportenObjectMapperException
@@ -20,7 +20,7 @@ class MaskinportenClient(
     private val grantTokenGenerator = MaskinportenGrantTokenGenerator(config)
 
     private val httpClient: HttpClient = HttpClient.newBuilder().proxy(config.proxy).build()
-    private val objectMapper = ObjectMapper().registerModule(KotlinModule())
+    private val objectMapper = ObjectMapper().registerKotlinModule()
 
     fun getToken(vararg scope: String): SignedJWT = tokenCache.getOrPut(scope.distinct().sorted()) {
         TokenCache(fetchToken(*scope))

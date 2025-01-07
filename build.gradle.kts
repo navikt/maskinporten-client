@@ -1,10 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.*
-
 group = "no.nav.pensjonsamhandling"
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "2.1.0"
     `maven-publish`
     `java-library`
 }
@@ -15,15 +13,18 @@ repositories {
 
 dependencies {
     implementation(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", "2.13.0")
-    implementation("com.nimbusds", "nimbus-jose-jwt", "9.15.2")
-    testImplementation("org.junit.jupiter", "junit-jupiter", "5.8.1")
-    testImplementation("com.github.tomakehurst", "wiremock", "2.27.2")
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", "2.18.0")
+    implementation("com.nimbusds", "nimbus-jose-jwt", "10.0.1")
+    testImplementation("org.junit.jupiter", "junit-jupiter", "5.11.4")
+    testImplementation("org.wiremock", "wiremock", "3.10.0")
 }
 
 java {
     withSourcesJar()
     withJavadocJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 publishing {
@@ -46,9 +47,6 @@ publishing {
 }
 
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "16"
-    }
     test {
         useJUnitPlatform()
     }
