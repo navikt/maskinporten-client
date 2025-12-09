@@ -1,6 +1,7 @@
 package no.nav.pensjonsamhandling.maskinporten.client
 
 import com.nimbusds.jwt.SignedJWT
+import java.time.Instant
 import java.util.*
 
 
@@ -12,19 +13,12 @@ internal class TokenCache(token: String) {
         get() = jwtClaimsSet?.expirationTime?.is20SecondsPrior?.not() ?: false
 
     private val Date.is20SecondsPrior: Boolean
-        get() = epochSeconds - (now.epochSeconds + TWENTY_SECONDS) >= 0
+        get() = toInstant().isAfter(now.plusSeconds(20))
 
-    private val Date.epochSeconds: Long
-        get() = time / 1000
-
-    private val now: Date
-        get() = Date()
+    private val now: Instant
+        get() = Instant.now()
 
     internal fun renew(newToken: String) = SignedJWT.parse(newToken).also {
         token = it
-    }
-
-    companion object {
-        private const val TWENTY_SECONDS = 20
     }
 }
