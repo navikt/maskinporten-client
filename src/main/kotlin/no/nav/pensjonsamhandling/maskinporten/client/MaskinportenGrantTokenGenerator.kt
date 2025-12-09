@@ -23,8 +23,9 @@ class MaskinportenGrantTokenGenerator(
         claim(SCOPE_CLAIM, scopes.joinToString(" "))
         config.jti?.also { jwtID(it) }
         config.resource?.also { claim(RESOURCE_CLAIM, it) }
-        issueTime(Date())
-        expirationTime(Date() addSeconds config.expiresInSeconds)
+        val now = Date()
+        issueTime(now)
+        expirationTime(now addSeconds config.expiresInSeconds)
     }.build()
 
     companion object {
