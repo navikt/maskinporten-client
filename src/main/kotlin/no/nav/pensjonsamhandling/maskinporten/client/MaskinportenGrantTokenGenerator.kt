@@ -24,7 +24,7 @@ class MaskinportenGrantTokenGenerator(
         config.jti?.also { claim(JTI_CLAIM, it) }
         config.resource?.also { claim(RESOURCE_CLAIM, it) }
         issueTime(Date())
-        expirationTime(Date() addSeconds config.validInSeconds)
+        expirationTime(Date() addSeconds config.expiresInSeconds)
     }.build()
 
     companion object {

@@ -7,7 +7,7 @@ data class MaskinportenConfig(
     internal val baseUrl: String,
     internal val clientId: String,
     internal val privateKey: RSAKey,
-    internal val validInSeconds: Int,
+    internal val expiresInSeconds: Long,
     internal val proxy: ProxySelector = ProxySelector.getDefault(),
     internal val jti: String? = null,
     internal val resource: String? = null

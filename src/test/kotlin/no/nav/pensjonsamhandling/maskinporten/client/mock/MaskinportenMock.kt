@@ -101,7 +101,7 @@ internal class MaskinportenMock {
                 baseUrl = MASKINPORTEN_MOCK_HOST,
                 clientId = "17b3e4e8-8203-4463-a947-5c24021b7742",
                 privateKey = privateKey,
-                validInSeconds = 120
+                expiresInSeconds = 120
         )
     }
 }

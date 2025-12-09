@@ -61,7 +61,7 @@ internal class MaskinportenGrantTokenGeneratorTest {
         val expirationTime = signedJWT.jwtClaimsSet.expirationTime
 
         assertTrue(Date() equalWithinOneSecond issuedAt)
-        assertTrue((Date() addSeconds config.validInSeconds) equalWithinOneSecond expirationTime)
+        assertTrue((Date() addSeconds config.expiresInSeconds) equalWithinOneSecond expirationTime)
     }
 
     private infix fun Date.equalWithinOneSecond(date: Date): Boolean = (time - date.time).absoluteValue < 1000L
